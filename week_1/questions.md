@@ -19,4 +19,6 @@
 - why the gff did not work out? how do I get the actual gene names to be called rather than 
   having to match them manually?
   
-- why do we need sorting?
+- why do we need sorting in the bam/sam files? 
+
+- what are the specialization of different aligners? What is the difference between Bowtie and BWA?
