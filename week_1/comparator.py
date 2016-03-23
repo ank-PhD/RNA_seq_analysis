@@ -32,6 +32,8 @@ combined = df_my_pipe.join(df_cufflinks, how='left')
 for i in range(1, 11):
     title = 't%s' % i
     sns.regplot(title+'-c', title+'-m', data=combined)
-    sns.plt.show()
+    sns.plt.savefig('corr-total.png')
+    # sns.plt.clf()
+    # sns.plt.show()
     # x = combined[title+'-c']
     # y = combined
