@@ -46,7 +46,7 @@ def run_cufflinks():
 
 def match_genes():
     match_set = []
-    with open(os.path.join(source_folder, 'genes.fpkm_tracking')) as source:
+    with open('genes.fpkm_tracking') as source:
         line_iterator = reader(source, delimiter='\t')
         line_iterator.next()
         for line in line_iterator:
