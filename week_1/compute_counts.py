@@ -1,6 +1,7 @@
 import numpy as np
 import os
 from csv import reader
+from pickle import dump
 from matplotlib import pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -67,6 +68,7 @@ def master_loop():
     gene_names = []
     master_store = []
     time_stamps = []
+    dump_dict = {}
     for file_name in os.listdir(source_folder):
         if file_name[-4:] == '.vcf':
             print file_name
@@ -74,8 +76,10 @@ def master_loop():
             time_stamps.append(file_name[:-4])
             gene_names = master_mix[:, 0]
             master_store.append(master_mix[:, 1])
+            dump_dict[file_name[:-4]] = [master_mix]
 
-
+    print dump_dict
+    dump(dump_dict, open('my_pipe.dmp', 'w'))
     arg_sorter = np.argsort(np.array([int(val[1:]) for val in time_stamps]))
     time_stamps = np.array(time_stamps)[arg_sorter]
     print time_stamps
