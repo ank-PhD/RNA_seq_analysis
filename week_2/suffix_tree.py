@@ -130,6 +130,35 @@ def collapse_linear_segments(tree):
 
     compact_subtree(0, None)
 
+def collect_leaves(tree, node):
+    pass
+
+def match_query(tree, query):
+    """
+    Can operate only on non-compacted trees
+
+    :param tree:
+    :param query:
+    :return:
+    """
+    running_tree_index = 0
+
+    # print 'inserting suffix', suffix
+
+    for breaking_index, char in enumerate(query):
+        if char in tree[running_tree_index][0]:
+            # print '\t char %s -> index in suffix %s' % (char, breaking_index)
+            running_tree_index = tree[running_tree_index][1][
+                tree[running_tree_index][0].index(char)]
+            suffix_index = breaking_index
+            # print ' \t running tree index: %s, suffix_index: %s' % (running_tree_index,
+            #                                                         suffix_index)
+        else:
+            break
+
+    # print 'suffix index', suffix_index
+    # print 'suffix len', len(suffix)
+    # print 'tree matched index: %s -> %s' % (running_tree_index, tree[running_tree_index])
 
 
 
