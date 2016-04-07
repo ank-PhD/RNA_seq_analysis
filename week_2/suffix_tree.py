@@ -130,8 +130,19 @@ def collapse_linear_segments(tree):
 
     compact_subtree(0, None)
 
+
 def collect_leaves(tree, node):
-    pass
+    _, link_list, termination = tree[node]
+
+    if termination:
+        return [termination]
+
+    else:
+        collection_list = []
+        for subnode in link_list:
+            collection_list += collect_leaves(tree, subnode)
+        return collection_list
+
 
 def match_query(tree, query):
     """
@@ -143,7 +154,7 @@ def match_query(tree, query):
     """
     running_tree_index = 0
 
-    # print 'inserting suffix', suffix
+    # print 'searching for query:', query
 
     for breaking_index, char in enumerate(query):
         if char in tree[running_tree_index][0]:
@@ -153,20 +164,30 @@ def match_query(tree, query):
             suffix_index = breaking_index
             # print ' \t running tree index: %s, suffix_index: %s' % (running_tree_index,
             #                                                         suffix_index)
-        else:
-            break
 
-    # print 'suffix index', suffix_index
-    # print 'suffix len', len(suffix)
-    # print 'tree matched index: %s -> %s' % (running_tree_index, tree[running_tree_index])
+    if suffix_index and suffix_index == len(query)-1:
+        return collect_leaves(tree, running_tree_index)
 
+    else:
+        return []
+
+
+def show_query(base, query, index_list):
+    print base
+
+    for index in sorted(index_list):
+        print ''.join([' ']*index) + query
 
 
 max_n = 0
 for sub_str_len in range(1, len(base)-1):
     max_n = add_to_tree(suffix_tree, base[-sub_str_len:], len(base)-sub_str_len, max_n)
 
-collapse_linear_segments(suffix_tree)
+match_list = match_query(suffix_tree, query)
 
-render_tree(suffix_tree)
+show_query(base, query, match_list)
+
+# collapse_linear_segments(suffix_tree)
+
+# render_tree(suffix_tree)
 
